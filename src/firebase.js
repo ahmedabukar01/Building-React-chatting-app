@@ -1,7 +1,7 @@
 import firebase from "firebase/app"
 import "firebase/auth";
 
-export default auth firebase.initializeApp({
+export const auth = firebase.initializeApp({
     apiKey: "AIzaSyADxn41ouUhIglwlL1KQWvXR7gNQUWCo-A",
     authDomain: "unichat-cbfd8.firebaseapp.com",
     projectId: "unichat-cbfd8",
