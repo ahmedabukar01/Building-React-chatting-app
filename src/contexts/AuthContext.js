@@ -7,7 +7,7 @@ const AuthContext = React.createContext();
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({children}) =>{
-    const [user,setUser] = useState({});
+    const [user,setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const history = useHistory();
 
@@ -15,9 +15,15 @@ export const AuthProvider = ({children}) =>{
         auth.onAuthStateChanged((user) =>{
             setUser(user);
             setLoading(false);
-            history.push('/chats');
+            if(user) history.push('/chats');
         })
     },[user,history]);
 
-    const 
+    const value = {user}
+
+    return (
+        <AuthContext.Provider value={value}>
+            {!loading && children}
+        </AuthContext.Provider>
+    )
 }
