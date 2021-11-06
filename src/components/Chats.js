@@ -2,9 +2,12 @@ import React from 'react'
 import { useHistory } from 'react-router-dom';
 import {ChatEngine} from 'react-chat-engine';
 import {auth} from '../firebase';
+import { useAuth } from '../contexts/AuthContext';
 
 const Chats = () =>{
     const history = useHistory();
+    const { user } = useAuth();
+    console.log(user)
 
     const handleLogout = async ()=>{
         await auth.signOut();
@@ -14,7 +17,7 @@ const Chats = () =>{
     return (
         <div className="chats-page">
             <div className="nav-bar">
-                <div className="logo">
+                <div className="logo-tab">
                     Unichat
                 </div>
                 <div onClick={handleLogout} className="logout-tab">
@@ -23,10 +26,11 @@ const Chats = () =>{
             </div>
 
             <ChatEngine 
+                projectId= "25549201-c7a1-4386-8afc-bb95c40bd246"
                 height="calc(100vh - 66px)"
-                ProjectId="1d0b9a90-4126-4f6c-a369-c8927ae6928d"
                 userName="."
                 userSecret="."
+                
             />
         </div>
     )
