@@ -40,9 +40,17 @@ const Chats = () =>{
             formdata.append('username',user.displayName);
             formdata.append('secret', user.uid);
 
-            getFile(user.photoUrl).then((avatar)=>{
+            getFile(user.photoURL)
+            .then((avatar)=>{
                 formdata.append('avatar',avatar,avatar.name);
+
+                axios.post('https://api.chatengine.io/users/',
+                formdata,
+                {headers: {"private-key": "ef723093-f6c0-4e16-8919-a019e077ed04"}}
+                )
             })
+            .then(()=>setLoading(false))
+            .catch((error)=> console.log(error));
         })
     },[user,history])
 
@@ -51,6 +59,9 @@ const Chats = () =>{
 
         history.push('/');
     }
+    
+    if(!user || loading) return "loading...";
+
     return (
         <div className="chats-page">
             <div className="nav-bar">
@@ -63,10 +74,10 @@ const Chats = () =>{
             </div>
 
             <ChatEngine 
-                projectId= "25549201-c7a1-4386-8afc-bb95c40bd246"
+                projectID= "25549201-c7a1-4386-8afc-bb95c40bd246"
                 height="calc(100vh - 66px)"
-                userName="."
-                userSecret="."
+                userName={user.email}
+                userSecret={user.uid}
                 
             />
         </div>
